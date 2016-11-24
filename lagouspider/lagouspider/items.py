@@ -8,16 +8,7 @@
 import scrapy
 
 
-class JdspiderItem(scrapy.Item):
+class LagouspiderItem(scrapy.Item):
     # define the fields for your item here like:
-	Price = scrapy.Field()
-	Name = scrapy.Field()
-    #comment = scrapy.Field()
-    #product_id = scrapy.Field()
-
-
-
-
-
-
-
+    # name = scrapy.Field()
+    pass
