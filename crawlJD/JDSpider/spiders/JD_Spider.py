@@ -1,6 +1,6 @@
 # - * - coding: utf-8 - * -
 
-__author__ = "放养的小爬虫"
+__author__ = "JD Scrawler"
 
 from scrapy.spiders import CrawlSpider
 from JDSpider.items import JdspiderItem
