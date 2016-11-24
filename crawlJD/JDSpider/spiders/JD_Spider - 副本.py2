@@ -12,19 +12,16 @@ import re, json
 class JdSpider(CrawlSpider):
 	name = "JDSpider"
 	redis_key = "JDSpider:start_urls"
-	start_urls = ["https://www.seek.co.nz/jobs-in-information-communication-technology/developers-programmers/in-new-zealand/#dateRange=999&workType=0&industry=6281&occupation=6287&graduateSearch=false&salaryFrom=0&salaryTo=999999&salaryType=annual&companyID=&advertiserID=&advertiserGroup=&keywords=web+developer&page=1&displaySuburb=&seoSuburb=&where=All+New+Zealand&whereId=3001&whereIsDirty=false&isAreaUnspecified=false&location=3001&area=&nation=3001%2C3001&sortMode=KeywordRelevance&searchFrom=quick&searchType="]
+	start_urls = ["http://www.ha97.com/1078.html"]
 	#http://book.jd.com/booktop/0-0-0.html?category=20003-0-0-0-10001-1#comfort"]
 	
 	def parse(self, response):
 		item = JdspiderItem()
 		selector = Selector(response)
-		pName = selector.xpath('/html/body/div[@id="bodyContainer"]/div[@id="bindingRoot"]/div[@class="grid_12 l-clearfix l-row"]/div[@id="job-listing-wrapper"]/div[@class="jobmail-signed-in jobs-exist first-page premium-jobs-exist no-tier1-jobs"]/section[@id="jobsListing"]/div[@class="jobs-list jobs-list-primary"]/article[@class="experimental-fade experimental-fade-completed"][1]/dl/dd[1]/p[@class="job-description"]/text()').extract()	
-		item['Name'] = pName
-		yield item
-		#Cates = selector.xpath('/html/body/div[@id="bodyContainer"]/div[@id="bindingRoot"]/div[@class="grid_12 l-clearfix l-row"]/div[@id="job-listing-wrapper"]/div[@class="jobmail-signed-in jobs-exist first-page premium-jobs-exist no-tier1-jobs"]/section[@id="jobsListing"]/div[@class="jobs-list jobs-list-premium"][1]/article')
-		#for each in Cates:
-		#	bPrice = each.xpath('dl/dd[1]/ul[@class="bullet-points"]/li[1]/text()').extract()	
-		#	pName = each.xpath('dl/dd[1]/h2/a[@class="job-title"]/text()').extract()		
+		Cates = selector.xpath('/html/body/div[@id="wrapper"]/div[@id="content"]/div[@id="content-aw"]/div[@id="aw-page"]/div[@class="post clearfix"]/p')
+		for each in Cates:
+			bPrice = each.xpath('em/text()').extract()	
+			pName = each.xpath('text()').extract()		
 			#temphref = each.xpath('div[@class="p-detail"]/a/@href').extract()
 			#temphref = str(temphref)
 			#BookID = str(re.search('com/(.*?)\.html',temphref).group(1))
@@ -33,14 +30,14 @@ class JdSpider(CrawlSpider):
 			#data = json.loads(r)[0]
 			#price = data['m']
 			#PreferentialPrice = data['p']
-		#	item['Price'] = bPrice
-		#	item['Name'] = pName
+			item['Price'] = bPrice
+			item['Name'] = pName
 			#item['author'] = author
             #item['press'] = press
             #item['BookID'] = BookID
             #item['price'] = price
             #item['PreferentialPrice'] = PreferentialPrice
-		#yield item
+			yield item
 
 		nextLink = selector.xpath('/html/body/div[7]/div[5]/form[1]/div/a[2]/@href').extract()
 		#/html/body/div[@id="J_searchWrap"]/div[@id="J_container"]/div[@id="J_main"]/div[@class="m-list"]/div[@class="ml-wrap"]/div[@class="page clearfix"]/div[@id="J_bottomPage"]/span[@class="p-num"]/a[@class="pn-next"]/@href').extract()
